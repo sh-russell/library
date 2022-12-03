@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/layout :: header(#{person.details})}">...</div>
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    <div th:text="#{person.details}">Person Details</div>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <span class="card-title h4" th:text="${person.fullName + ', ' + person.year}">Special title treatment</span>
+                        <div class="mb-3" th:if="${person.books.isEmpty()}" th:text="#{person.hasntTaken}">Person hasn't taken any book</div>
+                        <div class="mb-3" th:unless="${person.books.isEmpty()}" th:text="#{person.hasTaken(${person.books.size()})}"></div>
+                        <ul>
+                            <li th:style="${book.isExpired(10) ? 'color: red': ''}" th:each="book : ${person.books}" th:text="${book.name + '(' + book.year + ')'}"></li>
+                        </ul>
+                    </div>
+                    <hr/>
+                    <a class="btn btn-block btn-warning" th:href="@{/people/{id}/edit(id =${person.id})}" th:text="#{common.edit}">Edit</a>
+                    <a class="btn btn-block btn-danger" th:href="@{/people/{id}/delete(id =${person.id})}" th:text="#{common.delete}">Delete</a>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+</body>
+</html>

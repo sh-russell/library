@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/layout :: header(#{book.details})}">...</div>
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    <div th:text="#{book.details}"> Book Details</div>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <span class="card-title h4" th:text="${book.name + ' (' + book.year + ')'}">Special title treatment</span>
+                        <span class="badge bg-primary mb-3" th:if="${book.person == null}" th:text="#{book.available}">Book is available</span>
+                        <span class="badge bg-danger mb-3" th:unless="${book.person == null}" th:text="#{book.unavailable}">Book is unavailable</span>
+                    </div>
+                    <p class="card-text" th:text="${book.author}">With supporting text below as a natural lead-in to
+                        additional content.</p>
+                    <hr/>
+                    <div th:if="${book.person != null}" th:text="|#{book.belongs}: ${book.person.fullName}|"></div>
+                    <form th:if="${book.person == null}" class="mb-4" method="post" action="/books/attach"
+                          th:object="${attachBook}">
+                        <div class="row">
+                            <div class="col-8">
+                                <select class="form-select" th:field="*{personId}">
+                                    <option th:value="${attachBook.personId != null} ? '-' : ${person.id}" th:each="person: ${people}"
+                                            th:text="${person.fullName}"></option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <input type="hidden" name="bookId" th:value="${book.id}">
+                                <button class="btn btn-secondary" type="submit" th:text="${attachBook.personId != null} ? #{common.release}: #{common.attach}">Attach</button>
+                            </div>
+                        </div>
+                    </form>
+                    <a th:if="${book.person != null}" class="btn btn-block btn-secondary" th:href="@{/books/{id}/release(id =${book.id})}" th:text="#{common.release}">Release</a>
+                    <hr />
+                    <a class="btn btn-block btn-warning" th:href="@{/books/{id}/edit(id =${book.id})}" th:text="#{common.edit}">Edit</a>
+                    <a class="btn btn-block btn-danger" th:href="@{/books/{id}/delete(id =${book.id})}" th:text="#{common.delete}">Delete</a>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+</body>
+</html>

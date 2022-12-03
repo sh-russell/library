@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/layout :: header(#{book.books})}">...</div>
+<body>
+<div class="row">
+    <div class="col"></div>
+    <div class="col-8 border p-3">
+        <h2 class="text-center" th:text="#{book.books}">Books</h2>
+        <div th:unless="${books.isEmpty()}">
+            <table class="table table-bordered text-center">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" th:text="#{book.name}">Name</th>
+                    <th scope="col" th:text="#{book.author}">Author</th>
+                    <th scope="col" th:text="#{book.year}">Year</th>
+                    <th scope="col" th:text="#{book.belongs}">Belongs to</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book, stat:${books}">
+                    <th scope="row" th:text="${stat.count}">1</th>
+                    <td><a th:href="@{/books/{id}(id = ${book.id})}" th:text="${book.name}">Mark</a></td>
+                    <td th:text="${book.author}">Mark</td>
+                    <td th:text="${book.year}">@mdo</td>
+                    <td th:text="${book.person != null} ? ${book.person.fullName} : '-'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center" th:if="${books.isEmpty()}" th:text="#{book.noBooks}">No books yet</div>
+    </div>
+    <div class="col"></div>
+</div>
+</body>
+</html>

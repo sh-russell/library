@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:25432/postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  cache:
+    caffeine:
+      spec:
+#  thymeleaf:
+#    prefix: file:src/main/resources/templates/
+#    cache: false
+
+
+

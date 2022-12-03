@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/layout :: header(#{person.people})}">...</div>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-6 border p-3 bg-light">
+            <h2 class="mt-3 text-center" th:text="${person.id != null} ? #{common.edit} : #{common.create}">Add a person</h2>
+            <form method="post" th:action="${person.id != null ? '/people/edit' : '/people/new'}" th:object="${person}">
+                <input type="hidden" name="id" th:value="*{id}"/>
+                <div class="form-group">
+                    <label for="fullName" th:text="#{person.fullName}">Full Name</label>
+                    <input th:value="*{fullName}" type="text" name="fullName" th:errorclass="is-invalid" class="form-control" id="fullName">
+                    <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" class="invalid-feedback">We'll
+                        never share your email with anyone else.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="year" th:text="#{person.year}">Year</label>
+                    <input th:value="*{year}" type="number" name="year" th:errorclass="is-invalid"  class="form-control" id="year">
+                    <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="invalid-feedback">We'll never
+                        share your email with anyone else.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3" th:text="${person.id != null} ? #{common.update} : #{common.create}">
+                    Create
+                </button>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+</body>
+</html>

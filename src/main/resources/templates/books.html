@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/layout :: header(#{book.books})}">...</div>
+<body th:with="books=${page.content}">
+<div class="row">
+    <div class="col"></div>
+    <div class="col-10 border p-3">
+        <h2 class="text-center" th:text="#{book.books}">Books</h2>
+        <div th:unless="${books.isEmpty()}">
+            <table class="table table-bordered text-center">
+                <thead>
+                <tr>
+<!--                    <th scope="col">#</th>-->
+                    <th scope="col" th:text="#{book.name}">Name</th>
+                    <th scope="col" th:text="#{book.author}">Author</th>
+                    <th scope="col" th:text="#{book.year}">Year</th>
+                    <th scope="col" th:text="#{common.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book, stat:${books}">
+<!--                    <th scope="row" th:text="${stat.count}">1</th>-->
+                    <td><a th:href="@{/books/{id}(id = ${book.id})}" th:text="${book.name}">Mark</a></td>
+                    <td th:text="${book.author}">Mark</td>
+                    <td th:text="${book.year}">@mdo</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" th:href="@{/books/{id}/edit(id = ${book.id})}" th:text="#{common.edit}">Edit</a>
+                        <a class="btn btn-danger btn-sm"  th:href="@{/books/{id}/delete(id = ${book.id})}" th:text="#{common.delete}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center" th:if="${books.isEmpty()}" th:text="#{book.noBooks}">No books yet</div>
+        <div th:insert="~{fragments/layout::pagination(${page})}"></div>
+        <a class="btn btn-primary" href="/books/new" th:text="#{book.add}">Add book</a>
+    </div>
+    <div class="col"></div>
+</div>
+</body>
+</html>

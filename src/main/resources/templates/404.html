@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/layout :: header(#{book.details})}">...</div>
+<body>
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold">404</h1>
+        <p class="fs-3"><span class="text-danger" th:text="#{common.oops}">Opps!</span> <span th:text="#{error.pageNotFound}">Page not found.</span></p>
+        <p class="lead" th:text="#{error.pageNotFoundDetail}">
+            The page you’re looking for doesn’t exist.
+        </p>
+    </div>
+</div>
+</body>
+</html>
